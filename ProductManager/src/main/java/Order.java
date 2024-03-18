@@ -1,11 +1,36 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
-//Esta clase debe tener los atributos necesarios para añadir productos a una orden o comanda
+
 public class Order {
-    ArrayList<Product> O;
-    int ID;//Atributo para identificar la orden
-    public Order(int i){
-        this.ID = i;
+    private String UserID;
+    private HashMap<String, Integer> pedido;
+    public Order(String id, HashMap<String, Integer> c)
+    {
+        this.UserID = id;
+        this.pedido = c;
     }
+    public Order(){
+
+    }
+    public HashMap<String, Integer> getPedido(){
+        return this.pedido;
+    }
+
+    public void setPedido(HashMap<String, Integer> h) {
+        this.pedido=h;
+    }
+
+    public String getID(){
+        return this.UserID;
+    }
+    public void setID(String i){
+        this.UserID = i;
+    }
+    public void addLP(String id, Integer num){
+        pedido.put(id, num);
+    }
+
+
 
 }
