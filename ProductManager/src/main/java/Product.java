@@ -12,7 +12,7 @@ public class Product {
     public double getPrice(){
         return this.price;
     }
-    public double getSales(){
+    public Integer getSales(){
         return this.sales;
     }
     public void setSales(Integer i){

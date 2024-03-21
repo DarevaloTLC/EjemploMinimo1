@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String ID;
     private String name;
     private String lastname;
-    private ArrayList<Order> orderList;
+    private List<Order> orderList;
     public User(String i, String n, String ln){
         this.ID = i;
         this.name = n;
@@ -13,26 +13,32 @@ public class User {
     public User(){
 
     }
-    public String GetID(){
+    public String getID(){
         return this.ID;
     }
-    public String GetName(){
+    public String getName(){
         return this.name;
     }
-    public String GetLastName(){
+    public String getLastName(){
         return this.lastname;
     }
-    public void SetID(String id){
+    public void setID(String id){
         this.ID=id;
     }
-    public void SetName(String n){
+    public List<Order> getOrderList(){
+        return orderList;
+    }
+    public void setName(String n){
         this.name=n;
     }
-    public void SetLastName(String ls){
+    public void setLastName(String ls){
         this.lastname=ls;
     }
     public void addComanda(Order o){
         orderList.add(o);
+    }
+    public void setOrderList(List<Order> orderList){
+        this.orderList = orderList;
     }
 
 

@@ -1,27 +1,28 @@
 import java.util.*;
 
 
-public abstract class ProductManagerImpl implements ProductManager {
+public class ProductManagerImpl implements ProductManager {
     ArrayList<Product> L;
     HashMap<String, User> HM;
     QueueImpl<Order> Q;
 
+    public ProductManagerImpl(){
+        L=new ArrayList<>();
+        HM=new HashMap<>();
+        Q=new QueueImpl<>(20);
+    }
     @Override
-    public ArrayList<Product> productsByPrice(ArrayList<Product> l) {
-
-        l.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product p1, Product p2) {
-                return Double.compare(p1.getPrice(),p2.getPrice());
-            }
-        });
-        return l;
-
+    public List<Product> productsByPrice() {
+        Comparator<Product> priceComparator = Comparator.comparingDouble(Product::getPrice);
+        L.sort(priceComparator);
+        return L;
     }
 
     @Override
-    public ArrayList<Product> productsBySales(ArrayList<Product> l) {
-        return l;
+    public List<Product> productsBySales() {
+        Comparator<Product> salesComparator = Comparator.comparingDouble(Product::getSales);
+        L.sort(salesComparator.reversed()); //Queremos que nos devuelva la lista de ordenada de mayor a menor.
+        return L;
     }
 
     @Override
@@ -37,28 +38,38 @@ public abstract class ProductManagerImpl implements ProductManager {
             fullQueueException.printStackTrace();
         }
     }
+    @Override
+    public void addUser(String id, String name, String surname){
+        User u = new User(id,name,surname);
+        HM.put(id, u);
+    }
+
 
     @Override
     public Order processOrder() {
-        Order firstOrder = new Order();
-        try{
-            firstOrder = Q.pop();
-
-        }
+        /*Order o = new Order();
+        try{o = Q.pop();}
         catch(EmptyQueueException emptyQueueException){
             emptyQueueException.printStackTrace();
         }
-        HashMap<String, Integer> h = firstOrder.getPedido();
+        HashMap<String, Integer> h = o.getPedido();
         for(String s: h.keySet()){
-            for(Product p: L){
-                if(p.getID() == s){
-                    double sales = h.get(h) + p.getSales();
-
-
+            for(Product p : L){
+                if(p.getID().equals(s)){
+                    int sales = h.get(s) + p.getSales();
+                    p.setSales(sales);
                 }
             }
         }
-        L.get(firstOrder.getID()).addComanda(firstOrder);
+        HM.get(o.getID()).addComanda(o);
+        return o;
+        */
+        return Q.pop();
 
     }
+    @Override
+    public List<Order> ordersByUser(String userId){
+        return HM.get(userId).getOrderList();
+    }
+
 }

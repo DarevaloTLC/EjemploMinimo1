@@ -8,10 +8,5 @@ public interface ProductManager {
     public List<Order> ordersByUser(String userId);
 
     public void addUser(String s, String name, String surname);
-
-    ArrayList<Product> productsByPrice(ArrayList<Product> l);
-
-    ArrayList<Product> productsBySales(ArrayList<Product> l);
-
     public void addProduct(String productId, String name, double price);
 }

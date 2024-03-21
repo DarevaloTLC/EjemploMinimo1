@@ -5,10 +5,9 @@ import java.util.HashMap;
 public class Order {
     private String UserID;
     private HashMap<String, Integer> pedido;
-    public Order(String id, HashMap<String, Integer> c)
-    {
-        this.UserID = id;
-        this.pedido = c;
+    public Order(String id){
+        this.UserID=id;
+        pedido = new HashMap<>();
     }
     public Order(){
 
@@ -27,7 +26,7 @@ public class Order {
     public void setID(String i){
         this.UserID = i;
     }
-    public void addLP(String id, Integer num){
+    public void addLP(Integer num, String id){
         pedido.put(id, num);
     }
 
