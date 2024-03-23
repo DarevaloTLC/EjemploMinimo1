@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -9,9 +10,10 @@ public class User {
         this.ID = i;
         this.name = n;
         this.lastname = ln;
+        this.orderList = new ArrayList<>();
     }
-    public User(){
-
+    public User()
+    {
     }
     public String getID(){
         return this.ID;
@@ -35,7 +37,7 @@ public class User {
         this.lastname=ls;
     }
     public void addComanda(Order o){
-        orderList.add(o);
+        this.orderList.add(o);
     }
     public void setOrderList(List<Order> orderList){
         this.orderList = orderList;

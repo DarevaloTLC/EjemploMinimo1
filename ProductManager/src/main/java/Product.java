@@ -18,11 +18,17 @@ public class Product {
     public void setSales(Integer i){
         this.sales = i;
     }
+    public Product(){
+
+    }
     public Product(String i, String n, Double p){
         this.ID = i;
         this.name = n;
         this.price = p;
         this.sales = 0;
+    }
+    public void incrementSales(Integer quantity){
+        this.sales+=quantity;
     }
 
 }

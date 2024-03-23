@@ -2,9 +2,9 @@ import java.util.*;
 
 
 public class ProductManagerImpl implements ProductManager {
-    ArrayList<Product> L;
-    HashMap<String, User> HM;
-    QueueImpl<Order> Q;
+    private static List<Product> L;
+    private static HashMap<String, User> HM;
+    private static QueueImpl<Order> Q;
 
     public ProductManagerImpl(){
         L=new ArrayList<>();
@@ -33,7 +33,16 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public void addOrder(Order order) {
-        try{Q.push(order);}
+        try{
+            Q.push(order);
+            User user = HM.get(order.getID());
+            if(user != null){
+                user.addComanda(order);
+            }
+            else{
+                throw new IllegalArgumentException("Usuario no encontrado para la orden con ID: " + order.getID());
+            }
+        }
         catch(FullQueueException fullQueueException){
             fullQueueException.printStackTrace();
         }
@@ -47,29 +56,45 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Order processOrder() {
-        /*Order o = new Order();
-        try{o = Q.pop();}
-        catch(EmptyQueueException emptyQueueException){
-            emptyQueueException.printStackTrace();
-        }
-        HashMap<String, Integer> h = o.getPedido();
-        for(String s: h.keySet()){
-            for(Product p : L){
-                if(p.getID().equals(s)){
-                    int sales = h.get(s) + p.getSales();
-                    p.setSales(sales);
-                }
+        Order processedOrder = new Order();
+        try{
+            processedOrder = Q.pop();
+            HashMap<String, Integer> productsInOrder = processedOrder.getPedido();
+
+            for(Map.Entry<String, Integer> entry : productsInOrder.entrySet()){
+                String productId = entry.getKey();
+                Integer quantity = entry.getValue();
+                updateProductSales(productId, quantity);
             }
         }
-        HM.get(o.getID()).addComanda(o);
-        return o;
-        */
-        return Q.pop();
+        catch (EmptyQueueException emptyQueueException){
+            emptyQueueException.printStackTrace();
+        }
+        return processedOrder;
+
+
 
     }
     @Override
     public List<Order> ordersByUser(String userId){
-        return HM.get(userId).getOrderList();
+        User user = HM.get(userId);
+        if(user != null){
+            return user.getOrderList();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void updateProductSales(String productId, int quantity){
+        Product product = new Product();
+        for(Product p : L){
+            if(p.getID().equals(productId)){
+                product = p;
+                break;
+            }
+        }
+        product.incrementSales(quantity);
     }
 
 }

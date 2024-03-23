@@ -35,21 +35,19 @@ public class ProductManagerTest {
         pm.addOrder(o2);
         pm.addOrder(o3);
 
-
         Order order1 = pm.processOrder();
-        System.out.println("Productos ordenados por precio descendente:"+ order1.getPedido().keySet());
         Order order2 = pm.processOrder();
         Order order3 = pm.processOrder();
+        System.out.println("Comandas procesadas: " + order1 +" "+ order2 +" "+ order3);
 
-
-        List<Product> products1 = pm.productsByPrice();
         List<Product> products2 = pm.productsBySales();
         System.out.println("Productos ordenados por ventas descendente:");
         for (Product producto : products2) {
             System.out.println(producto.getSales());
         }
         List<Order> orders1 = pm.ordersByUser("1111111");
-        List<Order> orders2 = pm.ordersByUser("2222222");
+
+
     }
 
 }
